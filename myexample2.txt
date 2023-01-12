@@ -1,0 +1,115 @@
+Section .Func
+function:
+mov r1,1
+mov r2,message
+mov r3,message_len
+syscall
+mov r1,0
+mov r2,[num_1]
+mov r3,2
+syscall
+mov r1,1
+mov r2,message11
+mov r3,message11_len
+syscall
+mov r1,0
+mov r2,[num_2]
+mov r3,2
+syscall
+mov r4,[num_1]
+mov r5,[num_2]
+sub r4,48
+sub r5,48
+add r4,r5
+add r4,48
+mov [num_2],r4
+mov r1,1
+mov r2,message1
+mov r3,message1_len
+syscall
+mov r1,1
+mov r2,r4
+mov r3,1
+syscall
+mov r1,1
+mov r2,message2
+mov r3,message2_len
+syscall
+mov r5,[num_2]
+sub r5,48
+startloop:
+cmp r5,13
+jeq Done
+mov r4,r5
+add r4,48
+mov r1,1
+mov r2,message1
+mov r3,message1_len
+syscall
+mov r1,1
+mov r2,r4
+mov r3,2
+syscall
+mov r1,1
+mov r2,message2
+mov r3,message2_len
+syscall
+add r5,1
+jmp startloop
+Done:
+mov r1,1
+mov r2,message3
+mov r3,message3_len
+syscall
+ret
+print:
+mov r1,1
+mov r2,message0
+mov r3,[message_len0]
+syscall
+ret
+print2:
+mov r1,[sp+0]
+mov r2,[sp+1]
+mov r3,[sp+2]
+syscall
+ret
+
+Section .Text
+mov r1,1
+mov r2,message0
+mov r3,message_len0
+syscall
+mov r1,1
+mov r2,this_is)_message
+mov r3,1_len
+call function
+syscall
+mov r1,1
+mov r2,message22
+mov r3,message22_len
+call print2
+mov r1,message22
+mov r2,message22_len
+call print
+
+
+Section .Data
+DW message0 "Hello World\n"
+DD message_len0 len(message0)
+DW message "Input Number 1:\n"
+DD message_len len(message)
+DW message11 "Input Number 2:\n"
+DD message11_len len(message11)
+resb num_1 2
+resb num_2 2
+DW message1 "Output Number :\n"
+DD message1_len len(message1)
+DW message2 "\n"
+DD message2_len len(message2)
+DW message3 "Done Loop \n"
+DD message3_len len(message3)
+DW message22 "Do You Want Green Eggs And Ham?\n"
+DD message22_len len(message22)
+DW this_is)_message "I DO NOT LIKE GREEN EGGS AND HAM! I WLL NOT EAT THEM ANYWHERE!\n"
+DD 1_len len(this_is)_message)

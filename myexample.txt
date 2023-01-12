@@ -1,0 +1,124 @@
+Section .Func
+print:
+mov r1,1
+mov r2,[this_is)_message]
+mov r3,[1_len]
+syscall
+ret
+print2:
+mov r1,[sp+0]
+mov r2,[sp+1]
+mov r3,[sp+2]
+syscall
+ret
+math:
+mov r1,1
+mov r2,[sp+0]
+mov r3,[sp+1]
+syscall
+ret
+
+Section .Text
+mov r1,1
+mov r2,message
+mov r3,message_len
+syscall
+mov r1,1
+mov r2,message1
+mov r3,message1_len
+syscall
+mov r1,1
+mov r2,message2
+mov r3,message2_len
+syscall
+mov r1,1
+mov r2,this_is)_message
+mov r3,1_len
+syscall
+mov r1,0
+mov r2,hey_this_is_my_number
+mov r3,1
+syscall
+mov r1,0
+mov r2,hey_this_is_my_SECOND_number
+mov r3,1
+syscall
+mov r1,0
+mov r2,string2
+mov r3,1
+syscall
+mov r4,[hey_this_is_my_number]
+mov r5,[hey_this_is_my_SECOND_number]
+sub r4,48
+sub r5,48
+sub r4,r5
+mov r5,[string2]
+sub r5,48
+add r4,r5
+add r4,48
+mov [this_Is_My_result],r4
+mov r1,1
+mov r2,this_Is_My_result
+mov r3,20
+syscall
+mov r1,1
+mov r2,message22
+mov r3,message22_len
+syscall
+mov r1,0
+mov r2,hey_this_is_my_number
+mov r3,1
+syscall
+mov r1,0
+mov r2,hey_this_is_my_SECOND_number
+mov r3,1
+syscall
+mov r4,[hey_this_is_my_number]
+mov r5,[hey_this_is_my_SECOND_number]
+sub r4,48
+sub r5,48
+cmp r4,r5
+jnq Done
+mov r1,1
+mov r2,message3
+mov r3,[message3_len]
+syscall
+mov r1,0
+mov r2,string2
+mov r3,8
+syscall
+mov r1,1
+mov r2,string2
+mov r3,8
+syscall
+mov r1,1
+mov r2,message22
+mov r3,[message22_len]
+syscall
+Done:
+mov r1,1
+mov r2,message2
+mov r3,[message2_len]
+call print2
+mov r1,message
+mov r2,[message_len]
+call print
+
+Section .Data
+DW message "Hello World\n"
+DD message_len len(message)
+DW message1 "My Name Is Eric!\n"
+DD message1_len len(message1)
+DW message2 "Do You Want Green Eggs And Ham? "
+DD message2_len len(message2)
+DW this_is)_message "I DO NOT LIKE GREEN EGGS AND HAM! I WLL NOT EAT THEM ANYWHERE!\n"
+DD 1_len len(this_is)_message)
+DW message3 "Enter String "
+DD message3_len len(message3)
+resb hey_this_is_my_number 9
+resb hey_this_is_my_SECOND_number 9
+resb string 8
+resb string2 8
+resb this_Is_My_result 8
+DW message22 "\n"
+DD message22_len len(message22)
